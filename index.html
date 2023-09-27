@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function getComputerChoice() {
+            const choices = ["ROCK", "PAPER", "SCISSORS"];
+            let random_num = Math.floor(Math.random() * 3);
+            return choices[random_num];
+        }
+
+        function playRound(playerSelection, computerSelection) {
+            playerSelection = playerSelection.toUpperCase();
+            if (playerSelection === computerSelection) {
+                return "It's a tie!";
+            }
+            if (playerSelection === "ROCK") {
+                if (computerSelection === "SCISSORS") {
+                    return "You Win! Rock beats Scissors.";
+                } else {
+                    return "You Lose! Paper beats Rock.";
+                }
+            }
+            if (playerSelection === "PAPER") {
+                if (computerSelection === "ROCK") {
+                    return "You Win! Paper beats Rock.";
+                } else {
+                    return "You Lose! Scissors beats Paper.";
+                }
+            } else {
+                if (computerSelection === "PAPER") {
+                    return "You Win! Scissors beats Paper.";
+                } else {
+                    return "You Lose! Rock beats Scissors.";
+                }
+            }
+        }
+
+        function game() {
+            let playerWins = 0;
+            let computerWins = 0;
+            while (playerWins < 5 && computerWins < 5) {
+                let playerSelection = prompt("Rock, Paper, or Scissors");
+                let computerSelection = getComputerChoice();
+                let result = playRound(playerSelection, computerSelection);
+                console.log(result);
+                if (result[4] === "W") {
+                    playerWins++;
+                } else if (result[4] === "L") {
+                    computerWins++;
+                }
+            }
+            if (playerWins === 5) {
+                return "You Win!"
+            } else {
+                return "You Lose."
+            }
+        }
+
+        console.log(game());
+
+    </script>
+</body>
+</html>
