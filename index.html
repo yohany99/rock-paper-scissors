@@ -3,9 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./styles.css">
+    <title>Rock, Paper, Scissors</title>
 </head>
 <body>
+    <div class="title">
+        Let's play Rock, Paper, Scissors!
+    </div>
+    <div class="subtitle">
+        First to five wins!
+    </div>
+    <div class="buttons">
+        <button id="Rock">Rock</button>
+        <button id="Paper">Paper</button>
+        <button id="Scissors">Scissors</button>
+    </div>
+    <div class="output">
+        <div class="result">
+
+        </div>
+        <div class="score">
+            <div>
+                You: <span id="playerScore">0</span>
+            </div>
+            <div>
+                Computer: <span id="computerScore">0</span>
+            </div>
+        </div>
+    </div>
+
     <script>
         function getComputerChoice() {
             const choices = ["ROCK", "PAPER", "SCISSORS"];
@@ -47,7 +73,6 @@
                 let playerSelection = prompt("Rock, Paper, or Scissors");
                 let computerSelection = getComputerChoice();
                 let result = playRound(playerSelection, computerSelection);
-                console.log(result);
                 if (result[4] === "W") {
                     playerWins++;
                 } else if (result[4] === "L") {
@@ -60,8 +85,36 @@
                 return "You Lose."
             }
         }
+        //console.log(game());
 
-        console.log(game());
+        const buttons = document.querySelectorAll('div.buttons button');
+        buttons.forEach((button) => {
+            button.addEventListener('click', function() {
+                const result = playRound(button.id, getComputerChoice());
+                const resultDiv = document.querySelector('div.result');
+                resultDiv.textContent = result;
+                const playerScoreElement = document.getElementById('playerScore');
+                const computerScoreElement = document.getElementById('computerScore');
+                let playerScore = parseInt(playerScoreElement.textContent);
+                let computerScore = parseInt(computerScoreElement.textContent);
+                if (result[4] == "W") {
+                    playerScoreElement.textContent = ++playerScore;
+                } else if (result[4] == "L") {
+                    computerScoreElement.textContent = ++computerScore;
+                }
+                const endMessage = document.createElement('p');
+                const scoreDiv = document.querySelector('.score');
+                if (playerScore === 5) {
+                    endMessage.textContent = "Congrats, you beat the Computer!";
+                    endMessage.setAttribute('style', 'font-weight: bold; font-size: 20px;');
+                    scoreDiv.appendChild(endMessage);
+                } else if (computerScore === 5) {
+                    endMessage.textContent = "Sorry, but the Computer won.";
+                    endMessage.setAttribute('style', 'font-weight: bold; font-size: 20px');
+                    scoreDiv.appendChild(endMessage);
+                }
+            });
+        });
 
     </script>
 </body>
